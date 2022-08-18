@@ -1,6 +1,7 @@
-// lib/main.dart
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:yogagil/screen/home_screen.dart';
+import 'package:yogagil/screen/more_screen.dart';
 import 'package:yogagil/widget/bottom_bar.dart';
 
 void main() => runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late TabController controller;
+  TabController controller;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,11 +38,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('save'),
                 ),
               ),
-              Container(
-                child: Center(
-                  child: Text('more'),
-                ),
-              ),
+              MoreScreen(),
             ],
           ),
           bottomNavigationBar: Bottom(),
