@@ -22,7 +22,7 @@ class _CarouselImageState extends State<CarouselImage> {
   void initState() {
     super.initState();
     movies = widget.movies;
-    images = movies.map((m) => Image.asset('images/' + m.poster)).toList();
+    images = movies.map((m) => Image.network(m.poster)).toList();
     keywords = movies.map((m) => m.keyword).toList();
     likes = movies.map((m) => m.like).toList();
     _currentKeyword = keywords[0];
@@ -64,16 +64,28 @@ class _CarouselImageState extends State<CarouselImage> {
                       likes[_currentPage]
                           ? IconButton(
                         icon: Icon(Icons.check),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            likes[_currentPage] = !likes[_currentPage];
+                            movies[_currentPage].reference.updateData(
+                                {'like': likes[_currentPage]});
+                          });
+                        },
                       )
                           : IconButton(
                         icon: Icon(Icons.add),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            likes[_currentPage] = !likes[_currentPage];
+                            movies[_currentPage].reference.updateData(
+                                {'like': likes[_currentPage]});
+                          });
+                        },
                       ),
                       Text(
                         '내가 찜한 콘텐츠',
                         style: TextStyle(fontSize: 11),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -94,7 +106,7 @@ class _CarouselImageState extends State<CarouselImage> {
                         Text(
                           '재생',
                           style: TextStyle(color: Colors.black),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -121,16 +133,15 @@ class _CarouselImageState extends State<CarouselImage> {
                       )
                     ],
                   ),
-                ),
+                )
               ],
             ),
           ),
           Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: makeIndicator(likes, _currentPage),
-            ),
-          )
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: makeIndicator(likes, _currentPage),
+              )),
         ],
       ),
     );
@@ -145,10 +156,11 @@ List<Widget> makeIndicator(List list, int _currentPage) {
       height: 8,
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: _currentPage == i
-              ? Color.fromRGBO(255, 255, 255, 0.9)
-              : Color.fromRGBO(255, 255, 255, 0.4)),
+        shape: BoxShape.circle,
+        color: _currentPage == i
+            ? Color.fromRGBO(255, 255, 255, 0.9)
+            : Color.fromRGBO(255, 255, 255, 0.4),
+      ),
     ));
   }
 
